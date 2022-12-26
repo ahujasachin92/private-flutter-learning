@@ -8,11 +8,11 @@ import './widgets/new_transaction.dart';
 import './widgets/chart.dart';
 
 void main() {
-  /*WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);*/
+  //WidgetsFlutterBinding.ensureInitialized();
+  //SystemChrome.setPreferredOrientations([
+    //DeviceOrientation.portraitUp,
+    //DeviceOrientation.portraitDown,
+  //]);
   runApp(MyApp());
 }
 
@@ -123,6 +123,7 @@ void _addNewTransaction(String txTitle, double txAmount, DateTime chosenDate) {
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
     final appBar = AppBar(
         title: Text('Personal Expenses', 
         //style: TextStyle(fontFamily: 'OpenSans'),
@@ -141,7 +142,7 @@ void _addNewTransaction(String txTitle, double txAmount, DateTime chosenDate) {
           //mainAxisAlignment: MainAxisAlignment.start,
           //crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget> [
-            Row(
+            isLandscape ? Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
               Text('Show Chart'),
@@ -154,7 +155,7 @@ void _addNewTransaction(String txTitle, double txAmount, DateTime chosenDate) {
                 }
                 ),
             ],
-            ),
+            ) :
             _showChart? Container(
               height: (
                 MediaQuery.of(context).size.height - 
