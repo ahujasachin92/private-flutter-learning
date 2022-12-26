@@ -135,6 +135,14 @@ void _addNewTransaction(String txTitle, double txAmount, DateTime chosenDate) {
             ),
         ]
       );
+    final txListWidget = Container(
+              height: (
+                MediaQuery.of(context).size.height - 
+                appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 
+                0.70,
+              //child: Expanded(
+                child: TransactionList(_userTransactions,_deleteTransaction)
+                );
     return Scaffold(
       appBar: appBar,
       body: ListView(
@@ -156,21 +164,23 @@ void _addNewTransaction(String txTitle, double txAmount, DateTime chosenDate) {
                 ),
             ],
             ),
-            _showChart? Container(
+            if (!isLandscape)
+            Container(
+              height: (
+                MediaQuery.of(context).size.height - 
+                appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 
+                0.3,
+              child: Chart(_recentTransactions),
+              ),
+              if (!isLandscape) txListWidget,
+              if (isLandscape) _showChart ?
+              Container(
               height: (
                 MediaQuery.of(context).size.height - 
                 appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 
                 0.7,
               child: Chart(_recentTransactions),
-              ) :
-            Container(
-              height: (
-                MediaQuery.of(context).size.height - 
-                appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 
-                0.70,
-              //child: Expanded(
-                child: TransactionList(_userTransactions,_deleteTransaction)
-                ),
+              ) : txListWidget
             //),
           ],
         ),
