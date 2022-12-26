@@ -142,7 +142,7 @@ void _addNewTransaction(String txTitle, double txAmount, DateTime chosenDate) {
           //mainAxisAlignment: MainAxisAlignment.start,
           //crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget> [
-            isLandscape ? Row(
+            if (isLandscape) Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
               Text('Show Chart'),
@@ -152,10 +152,10 @@ void _addNewTransaction(String txTitle, double txAmount, DateTime chosenDate) {
                   setState(() {
                     _showChart = val;
                   });
-                }
+                },
                 ),
             ],
-            ) :
+            ),
             _showChart? Container(
               height: (
                 MediaQuery.of(context).size.height - 
