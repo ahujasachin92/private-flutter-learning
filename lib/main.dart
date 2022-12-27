@@ -34,12 +34,15 @@ class MyApp extends StatelessWidget {
           titleLarge: TextStyle(
             fontFamily: 'OpenSans',
             fontWeight: FontWeight.bold, 
-            fontSize: 18
+            fontSize: 18,
             ),
-            labelLarge: TextStyle(
-              color: Colors.white,
-            ), 
+            
+            //button: TextStyle(color: Colors.white),
+            //labelLarge: TextStyle(
+              //color: Colors.black,
+            //), 
         ),
+        
         appBarTheme: AppBarTheme(
           titleTextStyle: TextStyle(
             fontFamily: 'OpenSans',
@@ -47,6 +50,7 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.bold,
             ),
         ),
+        
         colorScheme: ColorScheme(
           brightness: Brightness.light, 
           primary: Colors.purple, 

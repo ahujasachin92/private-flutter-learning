@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 //import 'package:flutter_expense_app/widgets/user_transactions.dart';
@@ -69,6 +72,7 @@ class _NewTransactionState extends State<NewTransaction> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children:<Widget>[
+                  
                   TextField(
                     decoration: InputDecoration(labelText: 'Title'),
                     controller: _titleController,
@@ -95,11 +99,22 @@ class _NewTransactionState extends State<NewTransaction> {
                             : DateFormat.yMd().format(_selectedDate),
                             ),
                         ),
-                        TextButton(
+                        Platform.isIOS
+                        ? CupertinoButton(
+                          onPressed: _presentDatePicker,
+                          child: Text(
+                            'Choose Date',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                            ),
+                          )
+                        :TextButton(
                           onPressed: _presentDatePicker, 
                           child: Text(
                             'Choose Date',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold),
                             ),
                           style: ButtonStyle(
                             foregroundColor: MaterialStateProperty.all(Colors.purple),
@@ -109,7 +124,11 @@ class _NewTransactionState extends State<NewTransaction> {
                     ),
                   ),
                   ElevatedButton(
-                    child: Text('Add transaction', style: Theme.of(context).textTheme.titleSmall,), 
+                    child: Text(
+                      'Add transaction', 
+                      //style: Theme.of(context).textTheme.titleSmall,
+                      style: TextStyle(color: Theme.of(context).primaryColor),
+                      ), 
                     //style: ElevatedButton.styleFrom(
                       //foregroundColor: Colors.white,
                       //backgroundColor: Colors.purple,
