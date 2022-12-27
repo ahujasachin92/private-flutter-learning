@@ -1,4 +1,6 @@
-//import 'dart:js';
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
             ),
             labelLarge: TextStyle(
               color: Colors.white,
-            ),
+            ), 
         ),
         appBarTheme: AppBarTheme(
           titleTextStyle: TextStyle(
@@ -45,6 +47,18 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.bold,
             ),
         ),
+        colorScheme: ColorScheme(
+          brightness: Brightness.light, 
+          primary: Colors.purple, 
+          onPrimary: Colors.purple, 
+          secondary: Colors.amber, 
+          onSecondary: Colors.amber, 
+          error: Colors.red, 
+          onError: Colors.red, 
+          background: Colors.white, 
+          onBackground: Colors.white, 
+          surface: Colors.white, 
+          onSurface: Colors.white)
       ),
       home: MyHomePage(),
     );
@@ -88,7 +102,8 @@ List<Transaction> get _recentTransactions {
   }).toList();
 }
 
-void _addNewTransaction(String txTitle, double txAmount, DateTime chosenDate) {
+void _addNewTransaction(
+  String txTitle, double txAmount, DateTime chosenDate) {
   final newTx = Transaction(
     title: txTitle, 
     amount: txAmount, 
@@ -123,29 +138,46 @@ void _addNewTransaction(String txTitle, double txAmount, DateTime chosenDate) {
 
   @override
   Widget build(BuildContext context) {
-    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
-    final appBar = AppBar(
+    final mediaQuery = MediaQuery.of(context);
+    final isLandscape = mediaQuery.orientation == Orientation.landscape;
+    final PreferredSizeWidget appBar = Platform.isIOS 
+    ? CupertinoNavigationBar(
+      middle: Text(
+        'Personal Expenses',
+        ),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+        GestureDetector(
+          child: Icon(CupertinoIcons.add),
+          onTap: () => _startAddNewTransaction(context), 
+          ),
+      ],
+      ),
+    ) 
+    : AppBar(
         title: Text('Personal Expenses', 
         //style: TextStyle(fontFamily: 'OpenSans'),
         ),
-        actions:<Widget>[
-          IconButton(
+        actions: <Widget>[
+          IconButton (
             icon: Icon(Icons.add),
             onPressed: () => _startAddNewTransaction(context),
             ),
-        ]
-      );
+        ],
+      ) as PreferredSizeWidget;
     final txListWidget = Container(
               height: (
-                MediaQuery.of(context).size.height - 
-                appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 
+                mediaQuery.size.height - 
+                appBar.preferredSize.height - 
+                mediaQuery.padding.top) * 
                 0.70,
               //child: Expanded(
                 child: TransactionList(_userTransactions,_deleteTransaction)
                 );
-    return Scaffold(
-      appBar: appBar,
-      body: ListView(
+    
+    final pageBody = SafeArea (
+      child: ListView(
           //scrollDirection: Axis.vertical,
           //mainAxisAlignment: MainAxisAlignment.start,
           //crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -153,8 +185,9 @@ void _addNewTransaction(String txTitle, double txAmount, DateTime chosenDate) {
             if (isLandscape) Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-              Text('Show Chart'),
-              Switch(
+              Text('Show Chart', style: Theme.of(context).textTheme.titleMedium,),
+              Switch.adaptive(
+                activeColor: Theme.of(context).colorScheme.secondary,
                 value: _showChart,
                 onChanged: (val) {
                   setState(() {
@@ -167,8 +200,8 @@ void _addNewTransaction(String txTitle, double txAmount, DateTime chosenDate) {
             if (!isLandscape)
             Container(
               height: (
-                MediaQuery.of(context).size.height - 
-                appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 
+                mediaQuery.size.height - 
+                appBar.preferredSize.height - mediaQuery.padding.top) * 
                 0.3,
               child: Chart(_recentTransactions),
               ),
@@ -176,16 +209,29 @@ void _addNewTransaction(String txTitle, double txAmount, DateTime chosenDate) {
               if (isLandscape) _showChart ?
               Container(
               height: (
-                MediaQuery.of(context).size.height - 
-                appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 
+                mediaQuery.size.height - 
+                appBar.preferredSize.height - mediaQuery.padding.top) * 
                 0.7,
               child: Chart(_recentTransactions),
               ) : txListWidget
             //),
           ],
-        ),
+      ),
+        );
+    
+    return Platform.isIOS 
+    ? CupertinoPageScaffold(
+      child: pageBody, 
+      navigationBar: appBar as ObstructingPreferredSizeWidget,
+      ) 
+      : 
+      Scaffold(
+      appBar: appBar,
+      body: pageBody,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat ,
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: Platform.isIOS ?
+        Container () : FloatingActionButton
+        (
           child: Icon(Icons.add),
           onPressed: () => _startAddNewTransaction(context),
         ),
