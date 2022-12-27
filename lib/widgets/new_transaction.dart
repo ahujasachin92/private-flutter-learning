@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../widgets/adaptive_flat_button.dart';
 import 'package:intl/intl.dart';
 //import 'package:flutter_expense_app/widgets/user_transactions.dart';
 
@@ -99,27 +100,7 @@ class _NewTransactionState extends State<NewTransaction> {
                             : DateFormat.yMd().format(_selectedDate),
                             ),
                         ),
-                        Platform.isIOS
-                        ? CupertinoButton(
-                          onPressed: _presentDatePicker,
-                          child: Text(
-                            'Choose Date',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                            ),
-                          )
-                        :TextButton(
-                          onPressed: _presentDatePicker, 
-                          child: Text(
-                            'Choose Date',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold),
-                            ),
-                          style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all(Colors.purple),
-                          ),
-                          ),
+                        AdaptiveFlatButton('Choose date', _presentDatePicker)
                       ],
                     ),
                   ),
@@ -145,7 +126,7 @@ class _NewTransactionState extends State<NewTransaction> {
                 ],
               ),
             ),
-            ),
+      ),
     );
   }
 }
