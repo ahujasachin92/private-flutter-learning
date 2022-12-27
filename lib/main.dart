@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme(
           brightness: Brightness.light, 
           primary: Colors.purple, 
-          onPrimary: Colors.purple, 
+          onPrimary: Colors.black, 
           secondary: Colors.amber, 
           onSecondary: Colors.amber, 
           error: Colors.red, 
@@ -153,7 +153,10 @@ void _addNewTransaction(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
         GestureDetector(
-          child: Icon(CupertinoIcons.add),
+          child: Icon(
+            CupertinoIcons.add,
+            color: Theme.of(context).colorScheme.onPrimary, 
+            ),
           onTap: () => _startAddNewTransaction(context), 
           ),
       ],
@@ -165,7 +168,10 @@ void _addNewTransaction(
         ),
         actions: <Widget>[
           IconButton (
-            icon: Icon(Icons.add),
+            icon: Icon(
+              Icons.add,
+              //color: Theme.of(context).colorScheme.onPrimary,
+              ),
             onPressed: () => _startAddNewTransaction(context),
             ),
         ],

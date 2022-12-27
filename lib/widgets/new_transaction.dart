@@ -108,7 +108,9 @@ class _NewTransactionState extends State<NewTransaction> {
                     child: Text(
                       'Add transaction', 
                       //style: Theme.of(context).textTheme.titleSmall,
-                      style: TextStyle(color: Theme.of(context).primaryColor),
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
                       ), 
                     //style: ElevatedButton.styleFrom(
                       //foregroundColor: Colors.white,
