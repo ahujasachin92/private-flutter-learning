@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 class NewTransaction extends StatefulWidget {
   final Function addTx;
 
-  NewTransaction(this.addTx);
+ const NewTransaction(this.addTx);
 
   @override
   _NewTransactionState createState() => _NewTransactionState();
@@ -105,7 +105,7 @@ class _NewTransactionState extends State<NewTransaction> {
                     ),
                   ),
                   ElevatedButton(
-                    child: Text(
+                    child: const Text(
                       'Add transaction', 
                       //style: Theme.of(context).textTheme.titleSmall,
                       style: TextStyle(
