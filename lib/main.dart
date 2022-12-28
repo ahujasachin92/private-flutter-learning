@@ -147,7 +147,7 @@ void _addNewTransaction(
     final isLandscape = mediaQuery.orientation == Orientation.landscape;
     final PreferredSizeWidget appBar = Platform.isIOS 
     ? CupertinoNavigationBar(
-      middle: Text(
+      middle: const Text(
         'Personal Expenses',
         ),
       trailing: Row(
@@ -164,12 +164,12 @@ void _addNewTransaction(
       ),
     ) 
     : AppBar(
-        title: Text('Personal Expenses', 
+        title: const Text('Personal Expenses', 
         //style: TextStyle(fontFamily: 'OpenSans'),
         ),
         actions: <Widget>[
           IconButton (
-            icon: Icon(
+            icon: const Icon(
               Icons.add,
               //color: Theme.of(context).colorScheme.onPrimary,
               ),
@@ -243,7 +243,7 @@ void _addNewTransaction(
         floatingActionButton: Platform.isIOS ?
         Container () : FloatingActionButton
         (
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
           onPressed: () => _startAddNewTransaction(context),
         ),
       );
