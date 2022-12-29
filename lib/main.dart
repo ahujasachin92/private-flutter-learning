@@ -180,13 +180,8 @@ void _addNewTransaction(
     ];
   }
 
-  @override
-  Widget build(BuildContext context) {
-    print('build() MyHomePageState');
-    final mediaQuery = MediaQuery.of(context);
-    final isLandscape = mediaQuery.orientation == Orientation.landscape;
-    final PreferredSizeWidget appBar = Platform.isIOS 
-    ? CupertinoNavigationBar(
+Widget _iOSNavigationBar() {
+  return CupertinoNavigationBar(
       middle: const Text(
         'Personal Expenses',
         ),
@@ -202,8 +197,11 @@ void _addNewTransaction(
           ),
       ],
       ),
-    )
-    : AppBar(
+    );
+}
+
+Widget _androidAppBar () {
+  return AppBar(
         title: const Text('Personal Expenses', 
         //style: TextStyle(fontFamily: 'OpenSans'),
         ),
@@ -217,6 +215,17 @@ void _addNewTransaction(
             ),
         ],
       ) as PreferredSizeWidget;
+}
+
+  @override
+  Widget build(BuildContext context) {
+    print('build() MyHomePageState');
+    final mediaQuery = MediaQuery.of(context);
+    final isLandscape = mediaQuery.orientation == Orientation.landscape;
+    final PreferredSizeWidget appBar = Platform.isIOS 
+    ? _iOSNavigationBar() as PreferredSizeWidget
+    : _androidAppBar() as PreferredSizeWidget;
+    
     final txListWidget = Container(
               height: (
                 mediaQuery.size.height - 
